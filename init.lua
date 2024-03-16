@@ -378,7 +378,10 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz', {noremap = true, silent = true})
 vim.keymap.set('n', 'n', 'nzz')
 vim.keymap.set('n', 'N', 'Nzz')
 vim.keymap.set('n', '{', '{zz')
-vim.keymap.set('n', '}', '}zz')
+vim.keymap.set('n', '<C-t>', ':FloatermNew<CR>', {noremap = true, silent = true})
+-- close floaterm with ctrl-t
+vim.keymap.set('t', '<C-t>', '<C-\\><C-n>:FloatermToggle<CR>', {noremap = true, silent = true})
+
 
 local harpoon = require("harpoon")
 
