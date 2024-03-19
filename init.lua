@@ -45,6 +45,8 @@ vim.wo.relativenumber = true
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.o.cursorline = true
+vim.g.netrw_preview = 1
+
 vim.cmd [[
  if has('clipboard')
     set clipboard=unnamedplus
