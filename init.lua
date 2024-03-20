@@ -388,7 +388,13 @@ vim.keymap.set('t', '<C-t>', '<C-\\><C-n>:FloatermToggle<CR>', {noremap = true, 
 local harpoon = require("harpoon")
 
 -- REQUIRED
-harpoon:setup()
+harpoon:setup({
+  settings = {
+    save_on_toggle = true,
+    save_on_change = true,
+    sync_on_ui_close = true,
+  }
+})
 -- REQUIRED
 
 vim.keymap.set("n", "<leader>t", function() harpoon:list():append() end)
