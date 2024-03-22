@@ -106,7 +106,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -142,7 +142,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -301,7 +301,7 @@ require('lazy').setup({
   },
   {
     "ray-x/go.nvim",
-    dependencies = {  -- optional packages
+    dependencies = { -- optional packages
       "ray-x/guihua.lua",
       "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter",
@@ -309,8 +309,8 @@ require('lazy').setup({
     config = function()
       require("go").setup()
     end,
-    event = {"CmdlineEnter"},
-    ft = {"go", 'gomod'},
+    event = { "CmdlineEnter" },
+    ft = { "go", 'gomod' },
     build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
   },
 
@@ -332,9 +332,15 @@ require('lazy').setup({
         lsp_fallback = true,
       },
       formatters_by_ft = {
-        go = {'gofmt'},
+        go = { 'gofmt' },
       }
     },
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = {},
+    config = function(_, opts) require 'lsp_signature'.setup(opts) end
   },
 
 
@@ -409,15 +415,19 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous dia
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
-vim.keymap.set('n', '<C-d>', '<C-d>zz', {noremap = true, silent = true})
-vim.keymap.set('n', '<C-u>', '<C-u>zz', {noremap = true, silent = true})
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
 vim.keymap.set('n', 'n', 'nzz')
 vim.keymap.set('n', 'N', 'Nzz')
 vim.keymap.set('n', '{', '{zz')
-vim.keymap.set('n', '<C-t>', ':FloatermToggle<CR><C-\\><C-n>:FloatermUpdate --height=0.9 --width=0.9<CR>', {noremap = true, silent = true})
+vim.keymap.set('n', '<C-t>', ':FloatermToggle<CR><C-\\><C-n>:FloatermUpdate --height=0.9 --width=0.9<CR>',
+  { noremap = true, silent = true })
 -- close floaterm with ctrl-t
-vim.keymap.set('t', '<C-t>', '<C-\\><C-n>:FloatermToggle<CR>', {noremap = true, silent = true})
+vim.keymap.set('t', '<C-t>', '<C-\\><C-n>:FloatermToggle<CR>', { noremap = true, silent = true })
 
+vim.keymap.set('v', '<', '<gv', { noremap = true })
+vim.keymap.set('v', '>', '>gv', { noremap = true })
+vim.keymap.set('n', '<leader>dd', "<cmd> lua vim.diagnostic.open_float() <CR>", { desc = 'toggles local troubleshoot' })
 
 local harpoon = require("harpoon")
 
@@ -464,7 +474,7 @@ require('telescope').setup {
         ['<C-d>'] = false,
       },
     },
-    layout_strategy = 'vertical',
+    layout_strategy = 'horizontal',
     layout_config = {
       width = 0.9,
     },
@@ -522,6 +532,11 @@ vim.keymap.set('n', '<leader>/', function()
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
     previewer = false,
+    layout_config = {
+      width = 0.6,
+      height = 0.5,
+    },
+
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
@@ -792,4 +807,3 @@ cmp.setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-
