@@ -432,6 +432,14 @@ require('telescope').setup {
         ['<C-d>'] = false,
       },
     },
+    layout_strategy = 'vertical',
+    layout_config = {
+      width = 0.9,
+    },
+    path_display = { 'smart' },
+  },
+  pickers = {
+    lsp_references = { fname_width = 50 },
   },
 }
 
