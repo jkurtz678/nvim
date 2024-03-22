@@ -19,7 +19,7 @@ Kickstart.nvim is a template for your own configuration.
 
 
   And then you can explore or search through `:help lua-guide`
-  - https://neovim.io/doc/user/lua-guide.html
+  - https://neovim.io/oc/user/lua-guide.html
 
 
 Kickstart Guide:
@@ -47,6 +47,9 @@ vim.g.maplocalleader = ' '
 vim.o.cursorline = true
 vim.g.netrw_preview = 1
 vim.g.blamer_enabled = true
+vim.opt.tabstop = 3
+vim.opt.shiftwidth = 3
+vim.opt.expandtab = true
 
 vim.cmd [[
  if has('clipboard')
@@ -280,6 +283,12 @@ require('lazy').setup({
         end,
       },
     },
+    config = function()
+      local builtin = require 'telescope.builtin'
+      vim.keymap.set('n', '<leader>sn', function()
+        builtin.find_files { cwd = vim.fn.stdpath 'config' }
+      end, { desc = '[S]earch [N]eovim files' })
+    end,
   },
 
   {
@@ -303,7 +312,30 @@ require('lazy').setup({
     event = {"CmdlineEnter"},
     ft = {"go", 'gomod'},
     build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
-  }
+  },
+
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  },
+  {
+    'stevearc/conform.nvim',
+    opts = {
+      notify_on_error = false,
+      format_on_save = {
+        timeout_ms = 500,
+        lsp_fallback = true,
+      },
+      formatters_by_ft = {
+        go = {'gofmt'},
+      }
+    },
+  },
 
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
@@ -722,6 +754,7 @@ cmp.setup {
     completeopt = 'menu,menuone,noinsert',
   },
   mapping = cmp.mapping.preset.insert {
+
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -731,7 +764,7 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<Tab>'] = cmp.mapping(function(fallback)
+    --[[ ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_locally_jumpable() then
@@ -748,7 +781,7 @@ cmp.setup {
       else
         fallback()
       end
-    end, { 'i', 's' }),
+    end, { 'i', 's' }), ]]
   },
   sources = {
     { name = 'nvim_lsp' },
