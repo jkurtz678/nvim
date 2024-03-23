@@ -50,13 +50,14 @@ vim.g.blamer_enabled = true
 vim.opt.tabstop = 3
 vim.opt.shiftwidth = 3
 vim.opt.expandtab = true
+vim.opt.scrolloff = 8
+vim.opt.guicursor = ''
 
 vim.cmd [[
  if has('clipboard')
     set clipboard=unnamedplus
  endif
 ]]
-vim.opt.guicursor = 'n-v-c:block-Cursor/lCursor'
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
@@ -428,6 +429,15 @@ vim.keymap.set('t', '<C-t>', '<C-\\><C-n>:FloatermToggle<CR>', { noremap = true,
 vim.keymap.set('v', '<', '<gv', { noremap = true })
 vim.keymap.set('v', '>', '>gv', { noremap = true })
 vim.keymap.set('n', '<leader>dd', "<cmd> lua vim.diagnostic.open_float() <CR>", { desc = 'toggles local troubleshoot' })
+vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
+
+-- paste overwrite without copy
+vim.keymap.set("x", "<leader>p", "\"_dP")
 
 local harpoon = require("harpoon")
 
