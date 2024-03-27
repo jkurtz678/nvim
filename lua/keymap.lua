@@ -35,3 +35,11 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 -- paste overwrite without copy
 vim.keymap.set("x", "<leader>p", "\"_dP")
+
+-- vim fugitive open split version of file
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>gs",
+  ":vertical Gsplit main:%<CR>",
+  { noremap = true, silent = true, desc = 'Open main branch remote version of file' }
+)
